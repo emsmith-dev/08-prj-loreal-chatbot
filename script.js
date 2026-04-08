@@ -46,24 +46,19 @@ chatForm.addEventListener("submit", async (e) => {
   chatWindow.scrollTop = chatWindow.scrollHeight;
 
   try {
-    // Call your Cloudflare Worker or backend endpoint here
-    // Replace 'YOUR_API_URL' with your actual endpoint
-    const response = await fetch("YOUR_API_URL", {
+    // Call your Cloudflare Worker endpoint
+    const response = await fetch("https://08-prj-loreal-chatbot.ejepson.workers.dev", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        // Add Authorization header if needed
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        messages: messages,
-        model: "gpt-4o", // or "gpt-3.5-turbo"
-      }),
+        messages: messages
+      })
     });
     const data = await response.json();
     // Get the assistant's reply
-    const botMsg =
-      data.choices?.[0]?.message?.content ||
-      "Sorry, I couldn't get a response.";
+    const botMsg = data.choices?.[0]?.message?.content || "Sorry, I couldn't get a response.";
     messages.push({ role: "assistant", content: botMsg });
 
     // Remove loading and show bot reply
